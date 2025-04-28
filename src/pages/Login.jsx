@@ -6,7 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const { token, setToken, backendURL } = useContext(AppContext);
+  
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+  
   const [state, setState] = useState('Sign Up');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

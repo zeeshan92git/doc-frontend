@@ -153,72 +153,96 @@ function Appointment() {
 
   return (
     <div>
-      {/* doctor details */}
-      <div className='flex flex-col sm:flex-row gap-4 '>
-        <div>
-          <img className='bg-primary w-full sm:max-w-72 rounded-lg' src={docInfo.image} alt="profile_img" />
+      <div className="flex flex-col sm:flex-row gap-4">
+        {/* Doctor Image */}
+        <div className="sm:w-1/3 w-full flex justify-center">
+          <img
+            className="bg-primary w-70 sm:w-full max-w-xs rounded-lg"
+            src={docInfo.image}
+            alt="profile_img"
+          />
         </div>
-  
-        <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0 '>
+
+        {/* Doctor Info */}
+        <div className="flex-1 border border-gray-300 rounded-lg p-5 bg-white sm:mt-0 mt-4">
           <div>
-            <p className='flex items-center gap-2 text-2xl font-medium text-gray-800'>
+            <p className="flex items-center gap-2 text-xl sm:text-2xl font-medium text-gray-800">
               {docInfo.name}
-              <ShieldCheck className='mt-1 w-7 text-blue-700 ' />
+              <ShieldCheck className="text-blue-700 w-5 sm:w-6" />
             </p>
           </div>
-  
-          <div className='flex items-center gap-2 text-lg mt-1 text-gray-600 '>
+
+          <div className="flex flex-wrap items-center gap-2 text-sm sm:text-lg mt-2 text-gray-600">
             <p>{docInfo.degree} - {docInfo.speciality}</p>
-            <button className='py-0.5 px-2 border border-stone-200 text-xs rounded-full'>{docInfo.experience}</button>
+            <span className="py-0.5 px-2 border border-stone-300 text-xs rounded-full">{docInfo.experience}</span>
           </div>
-  
-          <div className='flex flex-col items-start gap-2 text-sm font-medium text-gray-900 mt-3'>
-            <p className='flex items-center gap-1 text-[15px] font-medium text-gray-700'>
-              About <ShieldAlert className='w-5' />
+
+          <div className="flex flex-col gap-2 mt-3 text-sm sm:text-base text-gray-700">
+            <p className="flex items-center gap-1 text-[15px] font-medium text-gray-700">
+              About <ShieldAlert className="w-4" />
             </p>
-            <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
-            <p className='text-lg mt-2 text-gray-600'>Appointment Fee: <span className='text-black'>${docInfo.fee}</span></p>
+            <p className="text-gray-500">{docInfo.about}</p>
+            <p className="text-base mt-2">
+              Appointment Fee: <span className="font-semibold">${docInfo.fee}</span>
+            </p>
           </div>
         </div>
       </div>
-  
-      {/* book appointment */}
-      <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
-        <p className="text-lg font-semibold">Booking Slots</p>
-        <p className="text-red-600 flex gap-2"><Clock /> : 10:00 AM - 8:30 PM </p>
-  
-        <div className='flex gap-3 items-center mt-4 w-full overflow-x-auto'>
-          {
-            doctSlots.length > 0 && doctSlots.map((item, index) => (
-              <div onClick={() => setslotIndx(index)}
-                className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndx === index ? 'bg-primary text-white ' : 'border border-gray-200 bg-blue-50 '}`} key={index}>
-                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-                <p>{item[0] && item[0].datetime.getDate()}</p>
-              </div>
-            ))
-          }
+
+      {/* Booking Section */}
+      <div className="mt-6 px-2 sm:px-0">
+        <p className="text-lg font-semibold text-gray-800">Booking Slots</p>
+        <p className="text-red-600 flex items-center gap-2">
+          <Clock className="w-4 h-4" /> 10:00 AM - 8:30 PM
+        </p>
+
+        {/* Date Slots */}
+        <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
+          {doctSlots.length > 0 && doctSlots.map((item, index) => (
+            <div
+              onClick={() => setslotIndx(index)}
+              className={`text-center py-4 px-3 min-w-[60px] rounded-full cursor-pointer flex-shrink-0 ${slotIndx === index ? 'bg-primary text-white' : 'border border-gray-200 bg-blue-50'
+                }`}
+              key={index}
+            >
+              <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
+              <p>{item[0] && item[0].datetime.getDate()}</p>
+            </div>
+          ))}
         </div>
-  
-        <div className='flex items-center gap-3 mt-4 w-full overflow-x-auto shadow-inner relative'>
+
+        {/* Time Slots */}
+        <div className="flex gap-3 mt-4 overflow-x-auto whitespace-nowrap">
           {doctSlots.length > 0 &&
             doctSlots[slotIndx].map((item, index) => (
               <p
                 onClick={() => setslotTime(item.time)}
-                className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-white' : 'border border-gray-200 bg-blue-50 '}`}
-                key={index}>
+                className={`text-sm font-light px-5 py-2 rounded-full cursor-pointer flex-shrink-0 ${item.time === slotTime ? 'bg-primary text-white' : 'border border-gray-200 bg-blue-50'
+                  }`}
+                key={index}
+              >
                 {item.time.toLowerCase()}
               </p>
             ))}
         </div>
-  
-        <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light rounded-full px-14 py-3 my-6'>Book an Appointment</button>
+
+        {/* Book Button */}
+        <div className="mt-6 text-center">
+          <button
+            onClick={bookAppointment}
+            className="bg-primary text-white text-sm font-medium rounded-full px-10 py-3"
+          >
+            Book an Appointment
+          </button>
+        </div>
       </div>
-  
+
+
       {/* Listing related Doctors */}
       <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
     </div>
   )
-  
+
 }
 
 export default Appointment;

@@ -13,10 +13,10 @@ function Footer() {
                 <div className="text-center flex flex-col items-center gap-2 ">
                     <div 
                         onClick={() => { navigate('/'); scrollTo(0, 0); }} 
-                        className="flex items-center gap-2 cursor-pointer"
+                        className="flex items-center gap-0 cursor-pointer"
                     >
                         <HeartPulse size={36} className="text-blue-700" />
-                        <span className="font-bold text-3xl  text-blue-700 font-sans">
+                        <span className="font-bold text-2xl  md:text-3xl text-blue-900">
                             DocCure
                         </span>
                     </div>

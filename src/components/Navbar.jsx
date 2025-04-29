@@ -11,16 +11,16 @@ function Navbar() {
   const logout = () => {
     setToken(false);
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
-    <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-gray-400 px-6 md:px-10 lg:px-20 xl:px-28">
-      
+    <div className="flex items-center justify-between  gap-2 text-sm py-4 mb-5 border-b border-gray-400 px-6 md:px-10 lg:px-20 xl:px-28">
+
       {/* Logo */}
-      <div onClick={() => navigate('/')} className="flex items-center gap-1 cursor-pointer">
-        <HeartPulse size={36} className="text-blue-600" />
-        <div className="font-bold text-2xl md:text-3xl text-blue-900 font-sans">
+      <div onClick={() => navigate('/')} className="flex items-center gap-0">
+        <HeartPulse size={34} className="text-blue-600" />
+        <div className="text-2xl md:text-3xl text-blue-900 font-bold">
           DocCure
         </div>
       </div>
@@ -29,7 +29,7 @@ function Navbar() {
       <ul className="hidden md:flex items-center gap-6 font-medium">
         {['/', '/doctors', '/about', '/contact'].map((path, idx) => (
           <NavLink key={idx} to={path} className="relative group">
-            <li className="py-1 hover:text-blue-600 transition-colors"> 
+            <li className="py-1 hover:text-blue-600 transition-colors">
               {path === '/' ? 'HOME' : path.slice(1).toUpperCase()}
             </li>
             <hr className="border-none outline-none h-0.5 w-3/5 bg-primary m-auto hidden group-hover:block" />
@@ -57,46 +57,45 @@ function Navbar() {
         ) : (
           <button
             onClick={() => navigate('/login')}
-            className="hidden md:block bg-primary text-white px-6 py-2 rounded-full text-sm hover:bg-blue-700 transition-all"
+            className="bg-primary text-white px-4 py-1 rounded-full text-xs sm:px-5 sm:py-2 sm:text-sm md:px-6 md:py-2 md:text-sm   whitespace-nowrap hover:bg-blue-700 transition-all"
           >
             Create Account
           </button>
         )}
 
         {/* Mobile Menu Icon */}
-        <Menu className="w-6 h-6 md:hidden cursor-pointer" onClick={() => setShowMenu(true)} />
+        <Menu className="w-6 h-6  sm:w-4 sm:h-4 md:hidden cursor-pointer" onClick={() => setShowMenu(true)} />
       </div>
 
       {/* Mobile Menu */}
+      {/* Mobile Menu */}
       {showMenu && (
-        <div className="fixed inset-0 z-30 bg-blue-100 p-6 flex flex-col gap-4 max-h-fit">
-          {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-              <HeartPulse size={36} className="text-blue-600" />
-              <p className="font-bold text-2xl text-blue-900">DocCure</p>
-            </div>
-            <X onClick={() => setShowMenu(false)} className="text-gray-700 w-8 h-8 cursor-pointer" />
+        <div
+          className="fixed inset-0 z-30 bg-black bg-opacity-20"
+          onClick={() => setShowMenu(false)} // Clicking on the background closes the menu
+        >
+          <div
+            className="fixed top-16 right-0 bg-blue-200 p-6 flex flex-col gap-2 max-h-fit w-fit shadow-md shadow-blue-50 rounded-lg"
+            onClick={(e) => e.stopPropagation()} // Clicking inside the menu will NOT close
+          >
+            {/* Mobile Nav Links */}
+            <ul className="flex flex-col items-center gap-2 text-lg font-medium mt-4">
+              {['/', '/doctors', '/about', '/contact'].map((path, idx) => (
+                <NavLink
+                  key={idx}
+                  to={path}
+                  onClick={() => setShowMenu(false)}
+                  className="px-4 py-2 rounded hover:bg-primary text-blue-700 hover:text-white w-full text-center"
+                >
+                  {path === '/' ? 'HOME' : path.slice(1).toUpperCase()}
+                </NavLink>
+              ))}
+            </ul>
           </div>
-
-          {/* Divider */}
-          <hr className="border-gray-400" />
-
-          {/* Mobile Nav Links */}
-          <ul className="flex flex-col items-center gap-6 text-lg font-medium mt-8">
-            {['/', '/doctors', '/about', '/contact'].map((path, idx) => (
-              <NavLink
-                key={idx}
-                to={path}
-                onClick={() => setShowMenu(false)}
-                className="px-4 py-2 rounded hover:bg-primary text-blue-700 hover:text-white w-full text-center"
-              >
-                {path === '/' ? 'HOME' : path.slice(1).toUpperCase()}
-              </NavLink>
-            ))}
-          </ul>
         </div>
       )}
+
+
     </div>
   );
 }

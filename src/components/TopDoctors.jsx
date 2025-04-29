@@ -8,7 +8,7 @@ function TopDoctors() {
   const { doctorsData } = useContext(AppContext); 
 
   return (
-    <div className="flex flex-col items-center gap-6 my-16 px-6 md:px-10 lg:px-28 text-gray-900">
+    <div className="flex flex-col items-center gap-6 my-16 px-6 md:px-10 lg:px-28 text-gray-900  pb-2">
       
       <h1 className="text-2xl sm:text-3xl font-semibold text-center">Top Doctors to Book</h1>
       
@@ -18,7 +18,7 @@ function TopDoctors() {
       </p>
 
       {/* Doctors Grid */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-8">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-5">
         {doctorsData.map((item, index) => (
           <div 
             onClick={() => {
@@ -26,7 +26,7 @@ function TopDoctors() {
               scrollTo(0, 0);
             }}
             key={index}
-            className="border border-blue-300 rounded-2xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-transform duration-300 bg-white shadow-sm"
+            className="border border-blue-300 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-[5px] transition-transform duration-300 bg-white shadow-sm"
           >
            
             <img 
@@ -57,7 +57,7 @@ function TopDoctors() {
           navigate('/doctors'); 
           scrollTo(0, 0); 
         }}
-        className="bg-blue-100 hover:bg-blue-200 px-10 py-3 mt-10 font-medium text-gray-700 rounded-full flex items-center gap-2 transition-colors duration-300"
+        className="bg-blue-100 hover:bg-blue-500 hover:text-white  px-10 py-3 mt-10 font-medium text-gray-700  rounded-full flex items-center gap-2 transition-colors duration-300"
       >
         More &rarr;
       </button>

@@ -1,18 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { HeartPulse, ChevronDown, Menu, X } from 'lucide-react';
+import { HeartPulse, ChevronDown, Menu, ChevronUp } from 'lucide-react';
 import { AppContext } from '../context/AppContext';
 
 function Navbar() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [showdropDown, setshowdropDown] = useState(false);
   const { token, setToken, userData } = useContext(AppContext);
 
-  const logout = () => {
+  function logout() {
     setToken(false);
     localStorage.removeItem('token');
     navigate('/');
   };
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setshowdropDown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
 
   return (
     <div className="flex items-center justify-between  gap-2 text-sm py-4 mb-5 border-b border-gray-400 px-6 md:px-10 lg:px-20 xl:px-28">
@@ -29,7 +45,7 @@ function Navbar() {
       <ul className="hidden md:flex items-center gap-6 font-medium">
         {['/', '/doctors', '/about', '/contact'].map((path, idx) => (
           <NavLink key={idx} to={path} className="relative group">
-            <li className="py-1 hover:text-blue-600 transition-colors">
+            <li className="text-gray-600 py-1 hover:text-blue-600 transition-colors">
               {path === '/' ? 'HOME' : path.slice(1).toUpperCase()}
             </li>
             <hr className="border-none outline-none h-0.5 w-3/5 bg-primary m-auto hidden group-hover:block" />
@@ -40,19 +56,25 @@ function Navbar() {
       {/* Right Side */}
       <div className="flex items-center gap-4">
         {token ? (
-          <div className="relative flex items-center cursor-pointer group">
+          <div ref={dropdownRef} className="relative flex items-center cursor-pointer">
             <img
               src={userData.image}
               alt="profile"
               className="w-8 h-8 rounded-full object-cover"
             />
-            <ChevronDown size={20} className="text-black ml-1" />
-            {/* Dropdown */}
-            <div className="absolute right-0 top-full mt-2 hidden group-hover:flex flex-col gap-3 bg-stone-100 rounded-lg shadow-md p-6 min-w-48 text-gray-600 text-base font-medium z-10 ">
-              <p onClick={() => navigate('/my-profile')} className="hover:text-blue-700 hover:underline cursor-pointer">My Profile</p>
-              <p onClick={() => navigate('/my-appointments')} className="hover:text-blue-700 hover:underline cursor-pointer ">My Appointments</p>
-              <p onClick={logout} className="hover:text-blue-700 hover:underline cursor-pointer">Log out</p>
-            </div>
+            {!showdropDown ?
+              <ChevronDown size={20} onClick={() => setshowdropDown(true)} className="text-gray-600 hover:text-blue-600 ml-1" />
+              :
+              <ChevronUp size={20} onClick={() => setshowdropDown(false)} className="text-gray-600 ml-1 hover:text-blue-600" />
+            }
+            {/* Dropdown for profile data */}
+            {showdropDown &&
+              <div className="absolute right-0 top-full mt-2 sm:mt-3 md:mt-4 flex flex-col gap-3 sm:gap-4 bg-blue-100 rounded-lg shadow-md shadow-blue-50 p-6 w-44 sm:w-48 md:w-56 text-gray-600 text-sm sm:text-base font-medium z-10">
+                <p onClick={() => { navigate('/my-profile'); setshowdropDown(false); }} className="hover:text-blue-600  cursor-pointer">My Profile</p>
+                <p onClick={() => { navigate('/my-appointments'); setshowdropDown(false); }} className="hover:text-blue-600  cursor-pointer ">My Appointments</p>
+                <p onClick={() => { logout(); setshowdropDown(false); }} className="hover:text-blue-600 cursor-pointer">Log out</p>
+              </div>
+            }
           </div>
         ) : (
           <button
@@ -67,7 +89,7 @@ function Navbar() {
         <Menu className="w-6 h-6  sm:w-4 sm:h-4 md:hidden cursor-pointer" onClick={() => setShowMenu(true)} />
       </div>
 
-      {/* Mobile Menu */}
+
       {/* Mobile Menu */}
       {showMenu && (
         <div
@@ -75,7 +97,7 @@ function Navbar() {
           onClick={() => setShowMenu(false)} // Clicking on the background closes the menu
         >
           <div
-            className="fixed top-16 right-0 bg-blue-200 p-6 flex flex-col gap-2 max-h-fit w-fit shadow-md shadow-blue-50 rounded-lg"
+            className="fixed top-16 right-0 bg-blue-100 p-6 flex flex-col gap-2 max-h-fit w-fit shadow-md shadow-blue-50 rounded-lg"
             onClick={(e) => e.stopPropagation()} // Clicking inside the menu will NOT close
           >
             {/* Mobile Nav Links */}
@@ -85,7 +107,7 @@ function Navbar() {
                   key={idx}
                   to={path}
                   onClick={() => setShowMenu(false)}
-                  className="px-4 py-2 rounded hover:bg-primary text-blue-700 hover:text-white w-full text-center"
+                  className="px-4 py-2 rounded  text-gray-600 hover:text-blue-600 w-full text-center"
                 >
                   {path === '/' ? 'HOME' : path.slice(1).toUpperCase()}
                 </NavLink>

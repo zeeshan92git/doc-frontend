@@ -27,7 +27,7 @@ function Header() {
 
         <a
           href="#speciality"
-          className="flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm hover:bg-blue-200 hover:text-gray-900 hover:scale-105 transition-all duration-300"
+          className="flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm hover:bg-blue-800 hover:font-semibold hover:text-white hover:scale-105 transition-all duration-300"
         >
           Book Appointment
           <MoveRight />

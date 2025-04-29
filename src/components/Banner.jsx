@@ -18,7 +18,7 @@ function Banner() {
             navigate('/login');
             scrollTo(0, 0);
           }}
-          className="bg-white text-primary text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-3 rounded-full mt-6 hover:bg-blue-200 hover:text-gray-900 hover:scale-105 transition-all"
+          className="bg-white text-primary text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-3 rounded-full mt-6 hover:bg-blue-800 hover:text-white hover:scale-105 transition-all"
         >
           Create Account
         </button>

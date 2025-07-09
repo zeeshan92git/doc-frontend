@@ -11,7 +11,7 @@ import Appointment from './pages/Appointment.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
@@ -37,5 +37,4 @@ const App = () => {
     
   )
 }
-
 export default App;

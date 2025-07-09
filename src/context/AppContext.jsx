@@ -45,6 +45,7 @@ const AppContextProvider = (props) => {
             toast.error("Failed to fetch user profile data.");
         }
     };
+    
     const value = {
         doctorsData, getDoctorsData ,
         token, setToken, backendURL , userData , setuserData , getuserProfileData 
@@ -53,6 +54,7 @@ const AppContextProvider = (props) => {
     useEffect(() => {
         getDoctorsData();
     }, []);
+
     useEffect(() => {
         if (token) {
             getuserProfileData();
@@ -60,7 +62,8 @@ const AppContextProvider = (props) => {
         else{
             setuserData(false);
         }
-    }, [token])
+    }, [token]);
+    
 
     return (
         <AppContext.Provider value={value}>

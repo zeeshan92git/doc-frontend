@@ -3,17 +3,15 @@ import axios from "axios";
 import { AppContext } from '../context/AppContext';
 
 function Contact() {
-
   const { backendURL } = useContext(AppContext);
-
   const [form, setForm] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
-
   const [status, setStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,21 +19,36 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!backendURL) {
+      setStatus('The API URL is missing. Set VITE_BACKEND_URL in the frontend deployment settings.');
+      return;
+    }
+
+    setIsSubmitting(true);
     setStatus('Sending...');
 
     try {
-      const { data } = await axios.post(backendURL + '/api/email/send-email', form);
+      const { data } = await axios.post(backendURL.replace(/\/+$/, '') + '/api/email/send-email', form);
       if (!data.success) {
-        setStatus(data.message || 'Something went wrong. Please try again.');
+        setStatus(data.message || 'The server could not save your message.');
         return;
       }
+
       setStatus(data.notificationSent
         ? 'Message received. A confirmation email was sent.'
         : 'Message received. Our team will review it.');
       setForm({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      console.error(err);
-      setStatus('Something went wrong. Please try again.');
+      console.error('Contact submission failed:', err);
+      // Distinguish a server response from a URL, network, or CORS connection failure.
+      if (err.response) {
+        setStatus(err.response.data?.message || `The API returned an error (HTTP ${err.response.status}).`);
+      } else {
+        setStatus('Could not reach the API. Check VITE_BACKEND_URL and confirm this site origin is allowed by the backend CORS settings.');
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -65,7 +78,7 @@ function Contact() {
       </div>
 
       <div className="max-w-4xl mx-auto px-5 py-10 bg-blue-200 rounded-md shadow-sm">
-        <h2 className="text-2xl font-extrabold font-serif  text-center text-blue-600 mb-8">Send Us a Message</h2>
+        <h2 className="text-2xl font-extrabold font-serif text-center text-blue-600 mb-8">Send Us a Message</h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col md:flex-row gap-6">
@@ -75,6 +88,8 @@ function Contact() {
               placeholder="Your Name"
               value={form.name}
               onChange={handleChange}
+              required
+              maxLength={100}
               className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300"
             />
             <input
@@ -83,6 +98,8 @@ function Contact() {
               placeholder="Your Email"
               value={form.email}
               onChange={handleChange}
+              required
+              maxLength={254}
               className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
           </div>
@@ -92,6 +109,8 @@ function Contact() {
             placeholder="Your Subject"
             value={form.subject}
             onChange={handleChange}
+            required
+            maxLength={160}
             className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
           <textarea
@@ -100,15 +119,18 @@ function Contact() {
             placeholder="Your Message"
             value={form.message}
             onChange={handleChange}
+            required
+            maxLength={5000}
             className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-all duration-300 w-40 self-center"
+            disabled={isSubmitting}
+            className="bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-all duration-300 w-40 self-center disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Submit
+            {isSubmitting ? 'Sending…' : 'Submit'}
           </button>
-          <p className="text-center text-sm mt-2">{status}</p>
+          <p aria-live="polite" role="status" className="text-center text-sm mt-2">{status}</p>
         </form>
       </div>
     </div>

@@ -24,8 +24,14 @@ function Contact() {
     setStatus('Sending...');
 
     try {
-      await axios.post(backendURL + '/api/email/send-email', form); // your backend route
-      setStatus('Message sent! Check your email.');
+      const { data } = await axios.post(backendURL + '/api/email/send-email', form);
+      if (!data.success) {
+        setStatus(data.message || 'Something went wrong. Please try again.');
+        return;
+      }
+      setStatus(data.notificationSent
+        ? 'Message received. A confirmation email was sent.'
+        : 'Message received. Our team will review it.');
       setForm({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
       console.error(err);

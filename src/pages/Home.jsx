@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import SpecialityMenu from '../components/SpecialityMenu';
 import TopDoctors from '../components/TopDoctors';
 import Banner from '../components/Banner';
-import { Sparkles } from "lucide-react";
+import { Leaf, RefreshCw } from "lucide-react";
 
 const Home = () => {
 
@@ -49,41 +49,31 @@ const Home = () => {
       <Banner />
 
       {/* Healthy tips section */}
-      <div className="px-6 py-10 bg-gradient-to-r from-green-100 via-blue-100 to-purple-100 rounded-3xl shadow-2xl my-12 mx-6 md:mx-16 lg:mx-28">
-
-        {/* Heading */}
-        <h2 className="flex justify-center items-center gap-1 text-2xl sm:text-3xl font-extrabold mb-8 text-center text-purple-700 font-serif tracking-wide">
-          <span className="text-yellow-400"><Sparkles /></span>
-          <span>Daily Health Tip</span>
-          <span className="text-yellow-400"><Sparkles /></span>
-        </h2>
-
-        <div className="flex flex-col items-center">
-
-          <div className="overflow-hidden rounded-xl shadow-lg mb-6 w-full max-w-xs sm:max-w-sm md:max-w-md">
-            <img
-              src={randomTip.image}
-              alt="Health Tip"
-              className="w-full h-48 sm:h-56 md:h-60 object-cover hover:scale-105 transition-transform duration-500"
-            />
+      <section className="section">
+        <div className="tip">
+          <div className="tip__media">
+            <img key={randomTip.image} src={randomTip.image} alt="Health Tip" className="fade-in" />
           </div>
 
-          <p className="text-lg sm:text-xl text-gray-800 italic text-center px-2 sm:px-6 md:px-12 leading-relaxed">
-            "{randomTip.text}"
-          </p>
+          <div className="tip__body">
+            <h2 className="t-h3 flex items-center gap-2">
+              <Leaf size={22} className="text-[var(--ok)]" />
+              Daily health tip
+            </h2>
 
-          <button
-            onClick={generateRandomTip}
-            className="flex items-center gap-2 mt-8 px-8 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
-          >
-            <span className="text-yellow-400"><Sparkles /></span>
-            New Tip
-          </button>
+            <p key={randomTip.text} className="tip__text fade-in">
+              "{randomTip.text}"
+            </p>
 
+            <button onClick={generateRandomTip} className="btn mt-8 self-start">
+              <RefreshCw size={16} />
+              New tip
+            </button>
+          </div>
         </div>
-      </div>
+      </section>
 
     </div>
   )
 }
-export default Home; 
+export default Home;

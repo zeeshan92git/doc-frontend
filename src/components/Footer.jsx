@@ -6,71 +6,59 @@ function Footer() {
     const navigate = useNavigate();
 
     return (
-        <div className="bg-blue-100 text-gray-300 py-5 px-6 rounded-md shadow-md mt-4 w-full mb-0 ">
-            {/* Main Content Area */}
-            <div className="flex flex-col items-center gap-10 mb-5">
-                {/* Logo, Image and Description */}
-                <div className="text-center flex flex-col items-center gap-2 ">
-                    <div 
-                        onClick={() => { navigate('/'); scrollTo(0, 0); }} 
-                        className="flex items-center gap-0 cursor-pointer"
-                    >
-                        <HeartPulse size={36} className="text-blue-700" />
-                        <span className="font-bold text-2xl  md:text-3xl text-blue-900">
-                            DocCure
-                        </span>
-                    </div>
-                    
-                    {/* Footer Image */}
-                    <img 
-                        src="https://res.cloudinary.com/dophfzeep/image/upload/v1741950593/header_img_zqsvkx.png" 
-                        alt="Healthcare Icon" 
-                        className="w-20 h-20 rounded-full shadow-lg shadow-blue-950"
-                    />
+        <footer className="footer">
+            <div className="grid md:grid-cols-12 gap-12">
 
-                    <p className="text-gray-800 leading-4 max-w-md mx-auto mt-2 text-sm md:text-base">
-                        <span className="font-bold text-stone-900">DocCure:</span> Empowering you to take control of your health with a comprehensive directory of doctors and a user-friendly booking system.
+                {/* Logo, image and description */}
+                <div className="md:col-span-6 flex flex-col items-start gap-6">
+                    <div
+                        onClick={() => { navigate('/'); scrollTo(0, 0); }}
+                        className="flex items-center gap-2 cursor-pointer"
+                    >
+                        <HeartPulse size={32} className="text-[var(--sage)]" />
+                        <span className="font-display font-semibold text-3xl tracking-tight">DocCure</span>
+                    </div>
+
+                    <p className="max-w-md text-[var(--sage-2)] leading-8">
+                        <span className="font-semibold text-[var(--bone)]">DocCure:</span> Empowering you to take control of your health with a comprehensive directory of doctors and a user-friendly booking system.
                     </p>
+
+                    <img
+                        src="https://res.cloudinary.com/dophfzeep/image/upload/v1741950593/header_img_zqsvkx.png"
+                        alt="Healthcare Icon"
+                        className="w-24 h-24 rounded-full object-cover bg-[var(--moss)]"
+                    />
                 </div>
 
-                {/* Links Sections */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20 text-center md:text-left">
-                    {/* Company Section */}
-                    <div>
-                        <p className="mb-2 font-bold text-stone-700 text-xl">Company</p>
-                        <ul className="flex flex-col gap-2 text-sm text-stone-600">
-                            <NavLink to="/" className="hover:text-blue-700 transition-colors">
-                                <li onClick={() => scrollTo(0, 0)}>Home</li>
-                            </NavLink>
-                            <NavLink to="/about" className="hover:text-blue-700 transition-colors">
-                                <li onClick={() => scrollTo(0, 0)}>About Us</li>
-                            </NavLink>
-                            <NavLink to="/contact" className="hover:text-blue-700 transition-colors">
-                                <li onClick={() => scrollTo(0, 0)}>Contact Us</li>
-                            </NavLink>
-                            <li className="hover:text-blue-700 transition-colors">Privacy Policy</li>
-                        </ul>
-                    </div>
+                {/* Links */}
+                <div className="md:col-span-3">
+                    <p className="font-display text-xl mb-6">Company</p>
+                    <ul className="flex flex-col gap-4 text-[var(--sage-2)]">
+                        <li><NavLink to="/" onClick={() => scrollTo(0, 0)}>Home</NavLink></li>
+                        <li><NavLink to="/about" onClick={() => scrollTo(0, 0)}>About us</NavLink></li>
+                        <li><NavLink to="/contact" onClick={() => scrollTo(0, 0)}>Contact us</NavLink></li>
+                        <li className="hov">Privacy policy</li>
+                    </ul>
+                </div>
 
-                    {/* Get In Touch Section */}
-                    <div>
-                        <p className="mb-2 font-bold text-stone-700 text-xl">Get In Touch</p>
-                        <ul className="flex flex-col gap-2 text-sm text-stone-600">
-                            <li className="hover:text-blue-700 transition-colors">+1-212-456-7890</li>
-                            <li className="hover:text-blue-700 transition-colors">doccure@gmail.com</li>
-                        </ul>
-                    </div>
+                <div className="md:col-span-3">
+                    <p className="font-display text-xl mb-6">Get in touch</p>
+                    <ul className="flex flex-col gap-4 text-[var(--sage-2)]">
+                        <li className="hov">+1-212-456-7890</li>
+                        <li className="hov">doccure@gmail.com</li>
+                    </ul>
                 </div>
             </div>
 
             {/* Bottom copyright */}
-            <div className="border-t border-gray-700 pt-5">
-                <p className="text-xs md:text-sm text-gray-500 text-center">
+            <div className="mt-12 pt-6 border-t border-[rgba(240,233,219,.18)]">
+                <p className="text-sm text-[var(--sage)]">
                     © 2025 DocCure.dev - All Rights Reserved.
                 </p>
             </div>
 
-        </div>
+            <div className="footer__word" aria-hidden="true">DocCure</div>
+        </footer>
     );
 }
 

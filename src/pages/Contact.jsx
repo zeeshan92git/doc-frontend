@@ -53,85 +53,105 @@ function Contact() {
   };
 
   return (
-    <div>
-      <div className='text-2xl pt-10 text-center'>
-        <p className='text-blue-700 text-3xl font-serif font-extrabold tracking-wide'>Contact Us</p>
-      </div>
+    <div className="pb-16">
+      <header className="pt-8 pb-12 lg:pt-16">
+        <h1 className="t-display reveal">Contact us</h1>
+      </header>
 
-      <div className='my-10 flex flex-col md:flex-row gap-10 justify-center text-sm mb-28'>
-        <img
-          className='w-full md:max-w-[360px] p-5'
-          src="https://res.cloudinary.com/dophfzeep/image/upload/v1742205236/contact_image_uc5ctb.png"
-          alt=""
-        />
+      <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-        <div className='flex flex-col gap-6 items-start'>
-          <p className='text-blue-800 font-serif font-semibold text-lg'>OUR OFFICE</p>
-          <p className='text-gray-500'>00000 Willms Station <br /> Suite 000, Washington, USA</p>
-          <p className='text-gray-500'>Tel: (000) 000-0000 <br /> Email: doccure@gmail.com</p>
-          <p className='font-semibold text-blue-800 font-serif text-lg'>CAREERS AT DOCCURE</p>
-          <p className='text-gray-500'>Learn more about our teams and job openings.</p>
-          <button className=' text-blue-600 font-semibold border border-blue-600 px-8 py-4 text-sm hover:bg-blue-600 hover:text-white transition-all duration-500'>
-            Explore Jobs
-          </button>
-        </div>
-      </div>
+        {/* Office + careers */}
+        <div className="lg:col-span-5 flex flex-col gap-8 reveal" style={{ '--i': 1 }}>
+          <img
+            className="w-full max-w-sm"
+            src="https://res.cloudinary.com/dophfzeep/image/upload/v1742205236/contact_image_uc5ctb.png"
+            alt=""
+          />
 
-      <div className="max-w-4xl mx-auto px-5 py-10 bg-blue-200 rounded-md shadow-sm">
-        <h2 className="text-2xl font-extrabold font-serif text-center text-blue-600 mb-8">Send Us a Message</h2>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <div className="flex flex-col md:flex-row gap-6">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              maxLength={100}
-              className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              maxLength={254}
-              className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
+          <div className="flex flex-col gap-4 pt-6 border-t border-[var(--rule)]">
+            <h2 className="t-h3">Our office</h2>
+            <p className="muted leading-8">00000 Willms Station <br /> Suite 000, Washington, USA</p>
+            <p className="muted leading-8">Tel: (000) 000-0000 <br /> Email: doccure@gmail.com</p>
           </div>
-          <input
-            type="text"
-            name="subject"
-            placeholder="Your Subject"
-            value={form.subject}
-            onChange={handleChange}
-            required
-            maxLength={160}
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          />
-          <textarea
-            rows="5"
-            name="message"
-            placeholder="Your Message"
-            value={form.message}
-            onChange={handleChange}
-            required
-            maxLength={5000}
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
-          />
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-all duration-300 w-40 self-center disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isSubmitting ? 'Sending…' : 'Submit'}
-          </button>
-          <p aria-live="polite" role="status" className="text-center text-sm mt-2">{status}</p>
-        </form>
+
+          <div className="flex flex-col items-start gap-4 pt-6 border-t border-[var(--rule)]">
+            <h2 className="t-h3">Careers at DocCure</h2>
+            <p className="muted">Learn more about our teams and job openings.</p>
+            <button className="btn">Explore jobs</button>
+          </div>
+        </div>
+
+        {/* Form */}
+        <div className="lg:col-span-7 panel reveal" style={{ '--i': 2 }}>
+          <h2 className="t-h2 mb-8">Send us a message</h2>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+            <div className="flex flex-col md:flex-row gap-8">
+              <div className="field w-full">
+                <label className="label" htmlFor="c-name">Your name</label>
+                <input
+                  id="c-name"
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  maxLength={100}
+                  className="input"
+                />
+              </div>
+              <div className="field w-full">
+                <label className="label" htmlFor="c-email">Your email</label>
+                <input
+                  id="c-email"
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  maxLength={254}
+                  className="input"
+                />
+              </div>
+            </div>
+            <div className="field">
+              <label className="label" htmlFor="c-subject">Your subject</label>
+              <input
+                id="c-subject"
+                type="text"
+                name="subject"
+                placeholder="Your Subject"
+                value={form.subject}
+                onChange={handleChange}
+                required
+                maxLength={160}
+                className="input"
+              />
+            </div>
+            <div className="field">
+              <label className="label" htmlFor="c-message">Your message</label>
+              <textarea
+                id="c-message"
+                rows="5"
+                name="message"
+                placeholder="Your Message"
+                value={form.message}
+                onChange={handleChange}
+                required
+                maxLength={5000}
+                className="textarea"
+              />
+            </div>
+            <div className="flex flex-col items-start gap-4">
+              <button type="submit" disabled={isSubmitting} className="btn btn-solid">
+                {isSubmitting ? 'Sending…' : 'Submit'}
+              </button>
+              <p aria-live="polite" role="status" className="text-sm muted">{status}</p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

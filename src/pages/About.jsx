@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Plus, Minus } from 'lucide-react';
 
 function About() {
   const faqData = [
@@ -24,6 +25,12 @@ function About() {
     },
   ];
 
+  const whyData = [
+    { title: "Efficiency", text: "Streamlined appointment scheduling that fits into your busy lifestyle." },
+    { title: "Convenience", text: "Access to a network of trusted healthcare professionals in your area." },
+    { title: "Personalization", text: "Tailored recommendations and reminders to help you stay on top of your health." },
+  ];
+
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -31,73 +38,68 @@ function About() {
   };
 
   return (
-    <div>
-      <div className="text-center text-2xl text-gray-500 pt-10">
-        <p className="text-blue-700 text-3xl font-serif font-extrabold tracking-wide">ABOUT US</p>
-      </div>
+    <div className="pb-16">
+      <header className="pt-8 pb-12 lg:pt-16">
+        <h1 className="t-display reveal">About us</h1>
+      </header>
 
       {/* Introduction */}
-      <div className="my-10 flex flex-col md:flex-row gap-12 px-4">
-        <img className="w-full md:max-w-[360px] p-5" src="https://res.cloudinary.com/dophfzeep/image/upload/v1742203223/about_image_vgt0cd.png" alt="about_image" />
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600 p-5">
+      <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+        <div className="lg:col-span-5 reveal" style={{ '--i': 1 }}>
+          <div className="hero-art max-w-sm mx-auto lg:mx-0">
+            <div className="hero-art__fill arch" style={{ background: 'linear-gradient(170deg, var(--sage-2), #C6D1B6)' }}>
+              <img src="https://res.cloudinary.com/dophfzeep/image/upload/v1742203223/about_image_vgt0cd.png" alt="about_image" style={{ height: '100%', objectFit: 'cover' }} />
+            </div>
+          </div>
+        </div>
+        <div className="lg:col-span-7 flex flex-col gap-6 leading-8 reveal" style={{ '--i': 2 }}>
           <p>Welcome to DocCure, your trusted partner in managing your healthcare needs conveniently and efficiently. At DocCure, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
           <p>DocCure is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, Prescripto is here to support you every step of the way.</p>
-          <b className="text-blue-800 font-serif text-lg">Our Vision</b>
-          <p>Our vision at DocCure is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
+          <h2 className="t-h3 pt-4">Our vision</h2>
+          <p className="muted">Our vision at DocCure is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
         </div>
       </div>
 
       {/* WHY CHOOSE US */}
-      <div className="text-xl my-4 md:pl-6">
-        <span className="text-blue-600 font-serif font-semibold">WHY CHOOSE US</span>
-      </div>
-      <div className="flex flex-col md:flex-row mb-20 text-sm md:ml-4 md:mr-4">
-        <div className="border px-10 md:px-16 py-4 sm:py-16 flex flex-col gap-5 text-sm hover:bg-primary hover:text-white text-gray-500 transition-all duration-300 cursor-pointer">
-          <b>EFFICIENCY:</b>
-          <p>Streamlined appointment scheduling that fits into your busy lifestyle.</p>
+      <section className="section grid lg:grid-cols-12 gap-8 lg:gap-12">
+        <h2 className="t-h2 lg:col-span-4">Why choose us</h2>
+        <div className="lg:col-span-8">
+          {whyData.map((item) => (
+            <div key={item.title} className="group grid md:grid-cols-12 gap-4 py-8 border-t border-[var(--rule)] last:border-b transition-colors duration-500 hover:bg-[var(--moss)] hover:text-[var(--bone)] md:px-4">
+              <h3 className="t-card md:col-span-5 group-hover:text-[var(--bone)]">{item.title}</h3>
+              <p className="md:col-span-7 leading-8 muted group-hover:text-[var(--sage-2)]">{item.text}</p>
+            </div>
+          ))}
         </div>
-
-        <div className="border px-10 md:px-16 py-4 sm:py-16 flex flex-col gap-5 text-sm hover:bg-primary hover:text-white text-gray-500 transition-all duration-300 cursor-pointer">
-          <b>CONVENIENCE:</b>
-          <p>Access to a network of trusted healthcare professionals in your area.</p>
-        </div>
-
-        <div className="border px-10 md:px-16 py-4 sm:py-16 flex flex-col gap-5 text-sm hover:bg-primary hover:text-white text-gray-500 transition-all duration-300 cursor-pointer">
-          <b>PERSONALIZATION:</b>
-          <p>Tailored recommendations and reminders to help you stay on top of your health.</p>
-        </div>
-      </div>
+      </section>
 
       {/* FAQ's Section */}
-      <div className="p-8 bg-blue-100 rounded-3xl shadow-2xl my-12">
-        <h2 className="flex items-center justify-center gap-2 text-3xl font-extrabold text-center text-blue-700 font-serif mb-10 tracking-wide">
-          <p className="text-red-500 text-3xl"> ?</p>
-          <p>Frequently Asked Questions</p>
-        </h2>
+      <section className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+        <h2 className="t-h2 lg:col-span-4">Frequently asked questions</h2>
 
-        <div className="space-y-6">
+        <div className="lg:col-span-8">
           {faqData.map((faq, index) => (
             <div
               key={index}
-              className="p-6 bg-gray-100 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer"
+              className="faq-row"
               onClick={() => toggleFAQ(index)}
             >
-              <h3 className="text-xl font-bold text-gray-800 flex justify-between items-center">
+              <h3 className="flex justify-between items-center gap-4 py-6 text-xl font-medium">
                 {faq.question}
-                <span className="text-2xl">
-                  {openIndex === index ? "-" : "+"}
+                <span>
+                  {openIndex === index ? <Minus size={20} /> : <Plus size={20} />}
                 </span>
               </h3>
 
               {openIndex === index && (
-                <p className="mt-4 text-gray-600 leading-relaxed">
+                <p className="pb-6 muted leading-8 max-w-[60ch] fade-in">
                   {faq.answer}
                 </p>
               )}
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

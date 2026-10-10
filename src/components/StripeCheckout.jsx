@@ -5,7 +5,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { AppContext } from "../context/AppContext";
 
-
+const cardStyle = {
+    style: {
+        base: { color: '#15170F', fontSize: '16px', '::placeholder': { color: '#5C5A4F' } },
+        invalid: { color: '#9F3A2A' },
+    },
+};
 
 const StripeCheckout = ({ amount, appointmentId, doctorname, slotTime , slotDate, phone , onSuccess }) => {
     const { backendURL, token } = useContext(AppContext);
@@ -38,10 +43,12 @@ const StripeCheckout = ({ amount, appointmentId, doctorname, slotTime , slotDate
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <CardElement />
-            <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">
-                Pay Now
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="card-input">
+                <CardElement options={cardStyle} />
+            </div>
+            <button className="btn btn-solid btn-block" type="submit">
+                Pay now
             </button>
         </form>
     );

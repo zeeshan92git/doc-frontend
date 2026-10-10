@@ -3,47 +3,42 @@ import { MoveRight } from "lucide-react";
 
 function Header() {
   return (
-    <div className="flex flex-col lg:flex-row bg-primary rounded-lg px-6 md:px-10 lg:px-20 mx-4 my-10  sm:mx-10 md:mx-20 lg:mx-28 overflow-hidden ">
-      
-      {/* Left side */}
-      <div className="flex-1 flex flex-col items-center lg:items-start justify-center gap-6 py-16 md:py-28 text-center lg:text-left">
-        <p className="text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight">
-          Book Appointment <br />
-          With Trusted Doctors
-        </p>
+    <section className="grid lg:grid-cols-12 gap-8 items-end pt-8 pb-16 lg:pt-16 lg:pb-24">
 
-        <div className="flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light">
+      {/* Left side */}
+      <div className="lg:col-span-7 flex flex-col items-start gap-8 relative z-10">
+        <h1 className="t-display">
+          <span className="mask"><span style={{ '--i': 0 }}>Book appointment</span></span>
+          <span className="mask"><span style={{ '--i': 1 }}><b>with trusted</b></span></span>
+          <span className="mask"><span style={{ '--i': 2 }}><b>doctors</b></span></span>
+        </h1>
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 reveal" style={{ '--i': 5 }}>
           <img
-            className="w-28"
+            className="w-32"
             src="https://res.cloudinary.com/dophfzeep/image/upload/v1741950576/group_profiles_opjrss.png"
             alt="group_profiles_img"
           />
-          <p>
-            Simply browse through our extensive list of trusted doctors &  
-            <br className="hidden md:block" />
-            schedule your appointment hassle-free.
+          <p className="lede muted max-w-[44ch]">
+            Simply browse through our extensive list of trusted doctors &amp; schedule your appointment hassle-free.
           </p>
         </div>
 
-        <a
-          href="#speciality"
-          className="flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm hover:bg-blue-800 hover:font-semibold hover:text-white hover:scale-105 transition-all duration-300"
-        >
-          Book Appointment
-          <MoveRight />
+        <a href="#speciality" className="btn btn-solid reveal" style={{ '--i': 6 }}>
+          Book appointment
+          <MoveRight size={18} />
         </a>
       </div>
 
-      {/* Right side */}
-      <div className="relative w-full lg:w-1/2 mt-10 lg:mt-0">
-        {/* Image only visible on large screens and above */}
-        <img
-          className="hidden lg:block absolute bottom-0 right-0 w-full max-w-lg object-contain"
-          src="https://res.cloudinary.com/dophfzeep/image/upload/v1741950593/header_img_zqsvkx.png"
-          alt="header_img"
-        />
+      {/* Right side: image only on large screens and above */}
+      <div className="hidden lg:block lg:col-span-5 reveal" style={{ '--i': 3 }}>
+        <div className="hero-art">
+          <div className="hero-art__fill arch">
+            <img src="https://res.cloudinary.com/dophfzeep/image/upload/v1741950593/header_img_zqsvkx.png" alt="header_img" />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

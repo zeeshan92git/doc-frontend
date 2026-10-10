@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { X } from 'lucide-react';
 import StripeCheckout from '../components/StripeCheckout.jsx';
 
 function Myappointments() {
@@ -85,52 +86,54 @@ function Myappointments() {
   }, [token])
 
   return (
-    <div>
+    <div className="pb-16">
 
-      <p className='pb-3 mt-12 font-medium text-zinc-700 border- b text-xl'> Your Appointments:</p>
+      <header className="pt-8 pb-12 lg:pt-16">
+        <h1 className="t-h1 reveal">Your appointments</h1>
+      </header>
 
-      <div>
-        {  
+      <div className="border-t border-[var(--rule)]">
+        {
           appointments.length ? (
           appointments.map((item, index) => (
             !item.cancelled && (
 
-              <div className='grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b bg-blue-50 mb-1' key={index}>
+              <div className='appt reveal' style={{ '--i': index }} key={index}>
 
                 <div>
-                  <img className='w-32 bg-indigo-50' src={item.docData.image} alt="doc_img" />
+                  <img className='appt__img' src={item.docData.image} alt="doc_img" />
                 </div>
-                <div className='flex-1 text-sm text-zinc-600'>
-                  <p className='font-semibold text-neutral-800'>{item.docData.name}</p>
-                  <p>{item.docData.speciality}</p>
-                  <p className='mt-1 font-medium text-zinc-700'>Address:</p>
-                  <p className='text-xs'>{item.docData.address.line1}</p>
-                  <p className='text-xs'>{item.docData.address.line2}</p>
-                  <p className='text-xs'><span className='text-sm text-zinc-700 font-medium'>Date & Time:</span>{dateFormat(item.slotDate)}  &  {item.slotTime}</p>
+                <div className='flex flex-col gap-2'>
+                  <p className='t-card'>{item.docData.name}</p>
+                  <p className='muted'>{item.docData.speciality}</p>
+                  <p className='mt-4 label'>Address</p>
+                  <p className='text-sm'>{item.docData.address.line1}</p>
+                  <p className='text-sm'>{item.docData.address.line2}</p>
+                  <p className='mt-2 text-sm'><span className='label mr-2'>Date &amp; time</span><span className='data'>{dateFormat(item.slotDate)}  &  {item.slotTime}</span></p>
                 </div>
 
-                <div className='flex flex-col gap-2 justify-end'>
+                <div className='flex flex-col gap-2 md:min-w-48'>
 
                   {!item.cancelled && !item.payment && !item.isCompleted &&
-                    <button onClick={() => { setshowStripe(true), setselectedAppoint(item) }}
-                      className='text-sm text-stone-500  text-center  sm:min-w-48  py-2 border rounded hover:bg-primary hover:text-white transition-all ' >
-                      Pay Online
+                    <button onClick={() => { setshowStripe(true); setselectedAppoint(item) }}
+                      className='btn btn-sm btn-solid' >
+                      Pay online
                     </button>}
                   {!item.cancelled && !item.payment && !item.isCompleted &&
-                    <button onClick={() => cancelAppointments(item._id)} className='text-sm text-stone-500  text-center  sm:min-w-48  py-2 border rounded  hover:bg-red-600 hover:text-white transition-all'>Cancel Appointment</button>
+                    <button onClick={() => cancelAppointments(item._id)} className='btn btn-sm btn-brick'>Cancel appointment</button>
                   }
                   {item.payment && !item.isCompleted &&
-                     <button disabled className=' text-white text-lg bg-green-500 text-center  sm:min-w-48  py-2 border rounded  hover:text-white transition-all'>Paid</button>
+                     <button disabled className='btn btn-sm btn-ok'>Paid</button>
                   }
                   {
-                    item.isCompleted && <button className='sm:min-w-48 py-2 border  border-green-500 text-green-500 rounded cursor-auto'>Completed</button>
+                    item.isCompleted && <button className='btn btn-sm !border-[var(--ok)] !text-[var(--ok)] !cursor-auto'>Completed</button>
                   }
 
                 </div>
               </div>
 
             )
-          ))) : <p className='text-center'> Appointments you booked will appear here.</p>
+          ))) : <p className='py-12 muted'> Appointments you booked will appear here.</p>
         }
       </div>
 
@@ -138,15 +141,16 @@ function Myappointments() {
 
       {showStripe && selectedAppoint && (
         <>
-          <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
+          <div className="modal-back">
+            <div className="modal">
               <button
                 onClick={() => setshowStripe(false)}
-                className="absolute top-2 right-3 text-red-500 text-lg font-bold"
+                className="absolute top-4 right-4 text-[var(--ink-2)] hover:text-[var(--brick)] transition-colors"
+                aria-label="Close"
               >
-                &times;
+                <X size={24} />
               </button>
-              <h2 className="text-xl font-semibold mb-4 text-center">Secure Payment</h2>
+              <h2 className="t-h3 mb-6">Secure payment</h2>
               <Elements stripe={stripePromise}>
                 <StripeCheckout
                   amount={selectedAppoint.docData.fee}
